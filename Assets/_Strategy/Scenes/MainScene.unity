@@ -5095,7 +5095,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 222498438694617643, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
       propertyPath: m_Name
-      value: VegetationLarge04
+      value: VegBuilding1
       objectReference: {fileID: 0}
     - target: {fileID: 222498438695050763, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
       propertyPath: m_RootOrder
@@ -5142,13 +5142,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 966008778728660469, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
-      propertyPath: _icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 66fcc30cc7292de4b8db45a4e9524b08, type: 3}
-    - target: {fileID: 966008778728660469, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
       propertyPath: _unitsParent
       value: 
       objectReference: {fileID: 939037443}
+    - target: {fileID: 4493477256418565175, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
+      propertyPath: outlineColor.b
+      value: 0.5984261
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493477256418565175, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
+      propertyPath: outlineColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4493477256418565175, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
+      propertyPath: outlineColor.r
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

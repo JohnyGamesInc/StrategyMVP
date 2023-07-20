@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using QuickOutline;
 
 
 namespace _Strategy._Main.Abstractions
@@ -10,6 +11,8 @@ namespace _Strategy._Main.Abstractions
         float Health { get; }
         float MaxHealth { get; }
         Sprite Icon { get; }
+
+        Outline Outline { get; }
 
     }
 }

@@ -13,6 +13,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         [SerializeField] private Camera _camera;
         [SerializeField] private SelectableValue _selectedObject;
 
+        
         private void Update()
         {
             HandleMouseButtonPressed();
@@ -36,6 +37,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             }
         }
     
+        
     }
 }
 
