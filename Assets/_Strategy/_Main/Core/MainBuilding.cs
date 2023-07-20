@@ -1,19 +1,40 @@
+using _Strategy._Main.Abstractions;
 using UnityEngine;
 
 
-internal sealed class MainBuilding : MonoBehaviour
+namespace _Strategy._Main.Core
 {
-
-    [SerializeField] private GameObject _unitPrefab;
-    [SerializeField] private Transform _unitsParent;
-
-
-    public void ProduceUnit()
+    
+    internal sealed class MainBuilding : MonoBehaviour, IUnitProducer, ISelectable
     {
-        Instantiate(_unitPrefab, 
-            new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f)), 
-            Quaternion.identity,
-            _unitsParent);
-    }
 
+        [SerializeField] private GameObject _unitPrefab;
+        [SerializeField] private Transform _unitsParent;
+
+        [SerializeField] private float _maxHealth = 1000.0f;
+        [SerializeField] private Sprite _icon;
+
+        private float _health = 1000.0f;
+
+        public float Health => _health;
+        
+        public float MaxHealth => _maxHealth;
+
+        public Sprite Icon => _icon;
+
+
+        
+        [ContextMenu("ProduceUnit")]
+        public void ProduceUnit()
+        {
+            Instantiate(
+                    _unitPrefab, 
+                    new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f)), 
+                    Quaternion.identity,
+                    _unitsParent
+                    )
+                .name = _unitPrefab.name;
+        }
+
+    }
 }
