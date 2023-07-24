@@ -56,7 +56,8 @@ namespace _Strategy._Main.UserControlSystem.UI.View
                 buttonGameObject.SetActive(true);
                 
                 var button = buttonGameObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnClickSubscription.Invoke(commandExecutors[i]));
+                var effectiveCounter = i;
+                button.onClick.AddListener(() => OnClickSubscription(commandExecutors[effectiveCounter]));
             }
         }
 

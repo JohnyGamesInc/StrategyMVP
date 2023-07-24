@@ -5,6 +5,7 @@ using _Strategy._Main.Abstractions.Commands;
 using _Strategy._Main.UserControlSystem.Commands;
 using _Strategy._Main.UserControlSystem.UI.Model;
 using _Strategy._Main.UserControlSystem.UI.View;
+using _Strategy._Main.Utils.AssetsInjector;
 using UnityEngine;
 
 
@@ -16,6 +17,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
 
         [SerializeField] private SelectableValue _selectable;
         [SerializeField] private CommandButtonsView _commandButtonsView;
+        [SerializeField] private AssetsContext _assetsContext;
 
         private ISelectable _currentSelectable;
 
@@ -54,7 +56,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         {
             var unitProducer = commandExecutor as CommandExecutorBase<IProduceUnitCommand>;
             if (unitProducer != null)
-                unitProducer.ExecuteCommand(new ProduceUnitCommand());
+                unitProducer.ExecuteCommand(_assetsContext.Inject(new ProduceUnitCommand()));
             else
                 throw new ApplicationException(
                     $"{nameof(CommandButtonsPresenter)}.{nameof(OnButtonClickSubscribe)}:" +
