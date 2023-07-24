@@ -17,16 +17,21 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
 
         public void SetValue(ISelectable value)
         {
-            if (CurrentValue != null)
-                CurrentValue.Outline.enabled = false;
-            
+            SetOutline(false);
             CurrentValue = value;
-            
-            if (CurrentValue != null)
-                CurrentValue.Outline.enabled = true;
+            SetOutline(true);
 
             OnSelectedSubscription(value);
         }
 
+        
+        private void SetOutline(bool enable)
+        {
+            if (CurrentValue != null)
+                if (CurrentValue.Outline != null)
+                    CurrentValue.Outline.enabled = enable;
+        }
+
+        
     }
 }
