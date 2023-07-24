@@ -1,4 +1,5 @@
 using _Strategy._Main.Abstractions;
+using QuickOutline;
 using UnityEngine;
 
 
@@ -8,6 +9,7 @@ namespace _Strategy._Main.Core
     internal sealed class MainBuilding : MonoBehaviour, IUnitProducer, ISelectable
     {
 
+        [SerializeField] private Outline _outline;
         [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private Transform _unitsParent;
 
@@ -21,6 +23,8 @@ namespace _Strategy._Main.Core
         public float MaxHealth => _maxHealth;
 
         public Sprite Icon => _icon;
+
+        public Outline Outline => _outline; 
 
 
         
