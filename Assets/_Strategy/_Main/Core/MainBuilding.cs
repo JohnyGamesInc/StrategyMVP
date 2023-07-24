@@ -29,7 +29,7 @@ namespace _Strategy._Main.Core
 
         
         [ContextMenu("ProduceUnit")]
-        public override void ExecuteSpecificCommand(IProduceUnitCommand command)
+        protected override void ExecuteSpecificCommand(IProduceUnitCommand command)
         {
             Instantiate(
                     command.UnitPrefab, 

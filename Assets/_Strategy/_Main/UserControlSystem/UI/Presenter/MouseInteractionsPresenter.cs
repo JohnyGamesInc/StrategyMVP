@@ -2,6 +2,7 @@ using System.Linq;
 using _Strategy._Main.Abstractions;
 using _Strategy._Main.UserControlSystem.UI.Model;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 namespace _Strategy._Main.UserControlSystem.UI.Presenter
@@ -11,6 +12,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
     {
 
         [SerializeField] private Camera _camera;
+        [SerializeField] private EventSystem _eventSystem;
         [SerializeField] private SelectableValue _selectedObject;
 
         
@@ -24,15 +26,18 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         {
             if (Input.GetMouseButtonUp(0))
             {
-
-                var hits = Physics.RaycastAll(_camera.ScreenPointToRay(Input.mousePosition));
-                if (hits.Length > 0)
+                if (!_eventSystem.IsPointerOverGameObject())
                 {
-                    var selectable = hits
-                        .Select(hit => hit.collider.GetComponentInParent<ISelectable>())
-                        .FirstOrDefault(s => s != null);
 
-                    _selectedObject.SetValue(selectable);
+                    var hits = Physics.RaycastAll(_camera.ScreenPointToRay(Input.mousePosition));
+                    if (hits.Length > 0)
+                    {
+                        var selectable = hits
+                            .Select(hit => hit.collider.GetComponentInParent<ISelectable>())
+                            .FirstOrDefault(s => s != null);
+
+                        _selectedObject.SetValue(selectable);
+                    }
                 }
             }
         }

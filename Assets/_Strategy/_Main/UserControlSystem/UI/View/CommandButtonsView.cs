@@ -8,8 +8,7 @@ using UnityEngine.UI;
 
 namespace _Strategy._Main.UserControlSystem.UI.View
 {
-
-    internal sealed class CommandButtonsView : MonoBehaviour
+    public sealed class CommandButtonsView : MonoBehaviour
     {
 
         [SerializeField] private GameObject _attackButton;
@@ -19,7 +18,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
         [SerializeField] private GameObject _produceUnitButton;
 
         
-        public event Action<ICommandExecutor> OnClick = delegate(ICommandExecutor executor) { };
+        public event Action<ICommandExecutor> OnClickSubscription = delegate(ICommandExecutor executor) { };
 
         
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
@@ -57,7 +56,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
                 buttonGameObject.SetActive(true);
                 
                 var button = buttonGameObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnClick.Invoke(commandExecutors[i]));
+                button.onClick.AddListener(() => OnClickSubscription.Invoke(commandExecutors[i]));
             }
         }
 
