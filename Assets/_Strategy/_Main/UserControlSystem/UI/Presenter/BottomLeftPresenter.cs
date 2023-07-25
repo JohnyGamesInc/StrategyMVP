@@ -24,18 +24,18 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         private void Start()
         {
 
-            _selectableValue.OnSelectedSubscription += OnSelectSubscribe;
-            OnSelectSubscribe(_selectableValue.CurrentValue);
+            _selectableValue.OnNewValueSelectedSubscription += OnNewValueSelectSubscribe;
+            OnNewValueSelectSubscribe(_selectableValue.CurrentValue);
         }
 
 
         private void OnDestroy()
         {
-            _selectableValue.OnSelectedSubscription -= OnSelectSubscribe;
+            _selectableValue.OnNewValueSelectedSubscription -= OnNewValueSelectSubscribe;
         }
 
 
-        private void OnSelectSubscribe(ISelectable selected)
+        private void OnNewValueSelectSubscribe(ISelectable selected)
         {
             _selectedImage.enabled = selected != null;
             _healthSlider.gameObject.SetActive(selected != null);

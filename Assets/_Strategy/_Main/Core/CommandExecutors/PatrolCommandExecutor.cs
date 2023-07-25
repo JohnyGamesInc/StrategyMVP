@@ -5,7 +5,7 @@ using UnityEngine;
 namespace _Strategy._Main.Core.CommandExecutors
 {
     
-    public class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
+    public sealed class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
     {
         
         protected override void ExecuteSpecificCommand(IPatrolCommand command)

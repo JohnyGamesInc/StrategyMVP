@@ -5,7 +5,7 @@ using UnityEngine;
 namespace _Strategy._Main.Core.CommandExecutors
 {
     
-    public class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
+    public sealed class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
     {
         
         protected override void ExecuteSpecificCommand(IAttackCommand command)

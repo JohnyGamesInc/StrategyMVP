@@ -4,7 +4,7 @@
 namespace _Strategy._Main.UserControlSystem.Commands
 {
     
-    public class StopUnitCommand : IStopCommand
+    public sealed class StopUnitCommand : IStopCommand
     {
         
         

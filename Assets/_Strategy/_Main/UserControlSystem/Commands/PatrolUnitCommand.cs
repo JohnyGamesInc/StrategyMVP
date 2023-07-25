@@ -4,7 +4,7 @@
 namespace _Strategy._Main.UserControlSystem.Commands
 {
     
-    public class PatrolUnitCommand : IPatrolCommand
+    public sealed class PatrolUnitCommand : IPatrolCommand
     {
         
         

@@ -8,7 +8,7 @@ namespace _Strategy._Main.Utils.AssetsInjector
 {
     
     [CreateAssetMenu(fileName = nameof(AssetsContext), menuName = "Configs/" + nameof(AssetsContext), order = 0)]
-    public class AssetsContext : ScriptableObject
+    public sealed class AssetsContext : ScriptableObject
     {
 
         [SerializeField] private Object[] _objects;

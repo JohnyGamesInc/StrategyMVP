@@ -4,7 +4,7 @@
 namespace _Strategy._Main.UserControlSystem.Commands
 {
     
-    public class AttackUnitCommand : IAttackCommand
+    public sealed class AttackUnitCommand : IAttackCommand
     {
         
         

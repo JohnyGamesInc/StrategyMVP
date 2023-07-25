@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using _Strategy._Main.Abstractions;
 using _Strategy._Main.Abstractions.Commands;
-using _Strategy._Main.UserControlSystem.Commands;
 using _Strategy._Main.UserControlSystem.UI.Model;
 using _Strategy._Main.UserControlSystem.UI.View;
-using _Strategy._Main.Utils.AssetsInjector;
 using UnityEngine;
+using Zenject;
 
 
 namespace _Strategy._Main.UserControlSystem.UI.Presenter
 {
     
-    public class CommandButtonsPresenter : MonoBehaviour
+    internal sealed class CommandButtonsPresenter : MonoBehaviour
     {
 
         [SerializeField] private SelectableValue _selectable;
         [SerializeField] private CommandButtonsView _commandButtonsView;
-        [SerializeField] private AssetsContext _assetsContext;
+
+        [Inject] private CommandButtonsModel _commandButtonsModel;
 
         private ISelectable _currentSelectable;
 
@@ -25,19 +24,36 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         
         private void Start()
         {
-            _selectable.OnSelectedSubscription += OnSelectedSubscribe;
-            OnSelectedSubscribe(_selectable.CurrentValue);
-            _commandButtonsView.OnClickSubscription += OnButtonClickSubscribe;
+            _commandButtonsView.OnClickSubscription += _commandButtonsModel.OnCommandButtonClicked;
+            _commandButtonsModel.OnCommandSent += _commandButtonsView.UnblockAllInteractions;
+            _commandButtonsModel.OnCommandCancel += _commandButtonsView.UnblockAllInteractions;
+            _commandButtonsModel.OnCommandAccepted += _commandButtonsView.BlockInteractions;
+            
+            _selectable.OnNewValueSelectedSubscription += OnNewValueSelectedSubscribe;
+            OnNewValueSelectedSubscribe(_selectable.CurrentValue);
         }
-        
-        
 
-        private void OnSelectedSubscribe(ISelectable selectable)
+
+        private void OnDestroy()
+        {
+            _commandButtonsView.OnClickSubscription -= _commandButtonsModel.OnCommandButtonClicked;
+            _commandButtonsModel.OnCommandSent -= _commandButtonsView.UnblockAllInteractions;
+            _commandButtonsModel.OnCommandCancel -= _commandButtonsView.UnblockAllInteractions;
+            _commandButtonsModel.OnCommandAccepted -= _commandButtonsView.BlockInteractions;
+            _selectable.OnNewValueSelectedSubscription -= OnNewValueSelectedSubscribe;
+        }
+
+
+        private void OnNewValueSelectedSubscribe(ISelectable selectable)
         {
             if (_currentSelectable != selectable)
             {
+                // Under the big question
+                // if (_currentSelectable != null) 
+                _commandButtonsModel.OnSelectionChanged();
+                
                 _currentSelectable = selectable;
-                _commandButtonsView.Clear();
+                _commandButtonsView.ClearButtonsPanel();
 
                 if (selectable != null)
                 {
@@ -52,46 +68,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         }
 
 
-        private void OnButtonClickSubscribe(ICommandExecutor commandExecutor)
-        {
-            var isExecuted = false;
-            
-            if (commandExecutor is CommandExecutorBase<IProduceUnitCommand> produceUnit)
-            {
-                produceUnit.ExecuteCommand(_assetsContext.Inject(new ProduceUnitCommandHeir()));
-                isExecuted = true;
-            }
-            
-            if (commandExecutor is CommandExecutorBase<IAttackCommand> attackUnit)
-            {
-                attackUnit.ExecuteCommand(new AttackUnitCommand());
-                isExecuted = true;
-            }
-            
-            if (commandExecutor is CommandExecutorBase<IMoveCommand> moveUnit)
-            {
-                moveUnit.ExecuteCommand(new MoveUnitCommand());
-                isExecuted = true;
-            }
-            
-            if (commandExecutor is CommandExecutorBase<IPatrolCommand> patrolUnit)
-            {
-                patrolUnit.ExecuteCommand(new PatrolUnitCommand());
-                isExecuted = true;
-            }
-            
-            if (commandExecutor is CommandExecutorBase<IStopCommand> stopUnit)
-            {
-                stopUnit.ExecuteCommand(new StopUnitCommand());
-                isExecuted = true;
-            }
-
-
-            if (!isExecuted) 
-                throw new ApplicationException(
-                    $"{nameof(CommandButtonsPresenter)}.{nameof(OnButtonClickSubscribe)}:" +
-                    $"Unknown type of Commands Executor: [{commandExecutor.GetType().FullName}] !");
-        }
+        
 
 
     }

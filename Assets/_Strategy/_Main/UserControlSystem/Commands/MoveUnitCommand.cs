@@ -4,7 +4,7 @@
 namespace _Strategy._Main.UserControlSystem.Commands
 {
     
-    public class MoveUnitCommand : IMoveCommand
+    public sealed class MoveUnitCommand : IMoveCommand
     {
         
     }

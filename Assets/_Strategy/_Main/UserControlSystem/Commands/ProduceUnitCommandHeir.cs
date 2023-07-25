@@ -6,7 +6,7 @@ using UnityEngine;
 namespace _Strategy._Main.UserControlSystem.Commands
 {
     
-    public class ProduceUnitCommandHeir : ProduceUnitCommand
+    public sealed class ProduceUnitCommandHeir : ProduceUnitCommand
     {
         
         [InjectAsset("ChomperUnit")] private GameObject _unitPrefab;

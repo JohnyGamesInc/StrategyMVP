@@ -5,7 +5,7 @@ using UnityEngine;
 namespace _Strategy._Main.Core.CommandExecutors
 {
     
-    public class MoveCommandExecutor : CommandExecutorBase<IMoveCommand>
+    public sealed class MoveCommandExecutor : CommandExecutorBase<IMoveCommand>
     {
         
         protected override void ExecuteSpecificCommand(IMoveCommand command)
