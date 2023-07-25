@@ -54,10 +54,40 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
 
         private void OnButtonClickSubscribe(ICommandExecutor commandExecutor)
         {
-            var unitProducer = commandExecutor as CommandExecutorBase<IProduceUnitCommand>;
-            if (unitProducer != null)
-                unitProducer.ExecuteCommand(_assetsContext.Inject(new ProduceUnitCommand()));
-            else
+            var isExecuted = false;
+            
+            if (commandExecutor is CommandExecutorBase<IProduceUnitCommand> produceUnit)
+            {
+                produceUnit.ExecuteCommand(_assetsContext.Inject(new ProduceUnitCommand()));
+                isExecuted = true;
+            }
+            
+            if (commandExecutor is CommandExecutorBase<IAttackCommand> attackUnit)
+            {
+                attackUnit.ExecuteCommand(new AttackUnitCommand());
+                isExecuted = true;
+            }
+            
+            if (commandExecutor is CommandExecutorBase<IMoveCommand> moveUnit)
+            {
+                moveUnit.ExecuteCommand(new MoveUnitCommand());
+                isExecuted = true;
+            }
+            
+            if (commandExecutor is CommandExecutorBase<IPatrolCommand> patrolUnit)
+            {
+                patrolUnit.ExecuteCommand(new PatrolUnitCommand());
+                isExecuted = true;
+            }
+            
+            if (commandExecutor is CommandExecutorBase<IStopCommand> stopUnit)
+            {
+                stopUnit.ExecuteCommand(new StopUnitCommand());
+                isExecuted = true;
+            }
+
+
+            if (!isExecuted) 
                 throw new ApplicationException(
                     $"{nameof(CommandButtonsPresenter)}.{nameof(OnButtonClickSubscribe)}:" +
                     $"Unknown type of Commands Executor: [{commandExecutor.GetType().FullName}] !");

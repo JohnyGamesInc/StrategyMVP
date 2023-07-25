@@ -5288,6 +5288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chomper
       objectReference: {fileID: 0}
+    - target: {fileID: 4973874919792439321, guid: 3a3cfe5364e00044ebc7d2cc4d38e497, type: 3}
+      propertyPath: _unitsParent
+      value: 
+      objectReference: {fileID: 939037443}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
