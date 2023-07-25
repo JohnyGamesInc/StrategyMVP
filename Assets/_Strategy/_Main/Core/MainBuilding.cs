@@ -1,16 +1,17 @@
 using _Strategy._Main.Abstractions;
+using _Strategy._Main.Abstractions.Commands;
 using QuickOutline;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 namespace _Strategy._Main.Core
 {
     
-    internal sealed class MainBuilding : MonoBehaviour, IUnitProducer, ISelectable
+    internal sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, ISelectable
     {
 
         [SerializeField] private Outline _outline;
-        [SerializeField] private GameObject _unitPrefab;
         [SerializeField] private Transform _unitsParent;
 
         [SerializeField] private float _maxHealth = 1000.0f;
@@ -26,19 +27,19 @@ namespace _Strategy._Main.Core
 
         public Outline Outline => _outline; 
 
-
         
         [ContextMenu("ProduceUnit")]
-        public void ProduceUnit()
+        protected override void ExecuteSpecificCommand(IProduceUnitCommand command)
         {
             Instantiate(
-                    _unitPrefab, 
+                    command.UnitPrefab, 
                     new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f)), 
                     Quaternion.identity,
                     _unitsParent
-                    )
-                .name = _unitPrefab.name;
+                )
+                .name = command.UnitPrefab.name;
         }
-
+        
+        
     }
 }
