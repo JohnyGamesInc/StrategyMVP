@@ -58,7 +58,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             
             if (commandExecutor is CommandExecutorBase<IProduceUnitCommand> produceUnit)
             {
-                produceUnit.ExecuteCommand(_assetsContext.Inject(new ProduceUnitCommand()));
+                produceUnit.ExecuteCommand(_assetsContext.Inject(new ProduceUnitCommandHeir()));
                 isExecuted = true;
             }
             
