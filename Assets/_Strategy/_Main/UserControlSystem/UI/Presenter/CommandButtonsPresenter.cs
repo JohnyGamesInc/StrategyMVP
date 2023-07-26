@@ -29,8 +29,8 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             _commandButtonsModel.OnCommandCancel += _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandAccepted += _commandButtonsView.BlockInteractions;
             
-            _selectable.OnNewValueSelectedSubscription += OnNewValueSelectedSubscribe;
-            OnNewValueSelectedSubscribe(_selectable.CurrentValue);
+            _selectable.OnNewValueSubscription += OnNewValueSubscribe;
+            OnNewValueSubscribe(_selectable.CurrentValue);
         }
 
 
@@ -40,11 +40,11 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             _commandButtonsModel.OnCommandSent -= _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandCancel -= _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandAccepted -= _commandButtonsView.BlockInteractions;
-            _selectable.OnNewValueSelectedSubscription -= OnNewValueSelectedSubscribe;
+            _selectable.OnNewValueSubscription -= OnNewValueSubscribe;
         }
 
 
-        private void OnNewValueSelectedSubscribe(ISelectable selectable)
+        private void OnNewValueSubscribe(ISelectable selectable)
         {
             if (_currentSelectable != selectable)
             {

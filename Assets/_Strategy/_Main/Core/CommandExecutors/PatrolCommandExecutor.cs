@@ -10,7 +10,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         
         protected override void ExecuteSpecificCommand(IPatrolCommand command)
         {
-            Debug.Log($"{name} Patrols");
+            Debug.Log($"{name} Patrols from [{command.From}] to [{command.To}]");
         }
         
         

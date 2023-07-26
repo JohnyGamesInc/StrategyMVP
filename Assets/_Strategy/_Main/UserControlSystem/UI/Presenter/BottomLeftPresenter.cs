@@ -24,14 +24,14 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         private void Start()
         {
 
-            _selectableValue.OnNewValueSelectedSubscription += OnNewValueSelectSubscribe;
+            _selectableValue.OnNewValueSubscription += OnNewValueSelectSubscribe;
             OnNewValueSelectSubscribe(_selectableValue.CurrentValue);
         }
 
 
         private void OnDestroy()
         {
-            _selectableValue.OnNewValueSelectedSubscription -= OnNewValueSelectSubscribe;
+            _selectableValue.OnNewValueSubscription -= OnNewValueSelectSubscribe;
         }
 
 

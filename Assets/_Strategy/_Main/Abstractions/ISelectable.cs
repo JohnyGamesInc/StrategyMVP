@@ -5,16 +5,14 @@ using QuickOutline;
 namespace _Strategy._Main.Abstractions
 {
     
-    public interface ISelectable
+    public interface ISelectable : IHealthHolder
     {
-
-        float Health { get; }
-        
-        float MaxHealth { get; }
         
         Sprite Icon { get; }
 
         Outline Outline { get; }
+
+        Transform PivotPoint { get; }
 
     }
 }

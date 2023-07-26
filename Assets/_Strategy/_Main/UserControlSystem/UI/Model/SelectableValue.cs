@@ -12,7 +12,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
         
         public ISelectable CurrentValue { get; private set; }
         
-        public event Action<ISelectable> OnNewValueSelectedSubscription = delegate(ISelectable selectable) {  };
+        public event Action<ISelectable> OnNewValueSubscription = delegate(ISelectable selectable) {  };
 
 
         public void SetValue(ISelectable value)
@@ -21,7 +21,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
             CurrentValue = value;
             SetOutline(true);
 
-            OnNewValueSelectedSubscription(value);
+            OnNewValueSubscription(value);
         }
 
         

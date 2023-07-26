@@ -10,7 +10,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         
         protected override void ExecuteSpecificCommand(IAttackCommand command)
         {
-            Debug.Log($"{name} Attacks");
+            Debug.Log($"{name} Attacks {command.Target} with HP [{command.Target.Health}/{command.Target.MaxHealth}]");
         }
         
         

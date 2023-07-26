@@ -15,7 +15,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
         
         protected override void ClassSpecificCommandCreation(Action<IProduceUnitCommand> creationCallback)
         {
-            creationCallback?.Invoke(_context.Inject(new ProduceUnitCommandHeir()));
+            creationCallback?.Invoke(_context.Inject(new ProduceUnitCommand()));
         }
         
         
