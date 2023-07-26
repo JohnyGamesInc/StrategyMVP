@@ -29,7 +29,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             _commandButtonsModel.OnCommandCancel += _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandAccepted += _commandButtonsView.BlockInteractions;
             
-            _selectable.OnNewValueSubscription += OnNewValueSubscribe;
+            _selectable.OnNewValueChanged += OnNewValueSubscribe;
             OnNewValueSubscribe(_selectable.CurrentValue);
         }
 
@@ -40,7 +40,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             _commandButtonsModel.OnCommandSent -= _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandCancel -= _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandAccepted -= _commandButtonsView.BlockInteractions;
-            _selectable.OnNewValueSubscription -= OnNewValueSubscribe;
+            _selectable.OnNewValueChanged -= OnNewValueSubscribe;
         }
 
 

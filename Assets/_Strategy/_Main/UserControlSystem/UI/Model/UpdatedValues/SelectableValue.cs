@@ -7,21 +7,14 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
 {
     
     [CreateAssetMenu(fileName = nameof(SelectableValue), menuName = "Configs/" + nameof(SelectableValue))]
-    public sealed class SelectableValue : ScriptableObject
+    public sealed class SelectableValue : ScriptableObjectValueBase<ISelectable>
     {
         
-        public ISelectable CurrentValue { get; private set; }
-        
-        public event Action<ISelectable> OnNewValueSubscription = delegate(ISelectable selectable) {  };
-
-
-        public void SetValue(ISelectable value)
+        public override void SetValue(ISelectable value)
         {
             SetOutline(false);
-            CurrentValue = value;
+            base.SetValue(value);
             SetOutline(true);
-
-            OnNewValueSubscription(value);
         }
 
         

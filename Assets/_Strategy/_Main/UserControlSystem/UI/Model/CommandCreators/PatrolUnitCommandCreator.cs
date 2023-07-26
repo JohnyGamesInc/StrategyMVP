@@ -19,7 +19,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
 
 
         [Inject]
-        private void Init(Vector3Value groundClicks) => groundClicks.OnNewValueSubscription += OnNewValue;
+        private void Init(Vector3Value groundClicks) => groundClicks.OnNewValueChanged += OnNewValue;
 
 
         protected override void ClassSpecificCommandCreation(Action<IPatrolCommand> creationCallback) =>

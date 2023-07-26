@@ -18,11 +18,8 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
 
 
         [Inject]
-        private void Init(AttackableValue groundClicks)
-        {
-            groundClicks.OnNewValueSubscription += OnNewValue;
-        }
-
+        private void Init(AttackableValue groundClicks) => groundClicks.OnNewValueChanged += OnNewValue;
+        
         
         protected override void ClassSpecificCommandCreation(Action<IAttackCommand> creationCallback)
         {
