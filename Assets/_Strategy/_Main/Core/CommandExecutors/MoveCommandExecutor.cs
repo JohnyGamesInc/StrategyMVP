@@ -10,7 +10,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         
         protected override void ExecuteSpecificCommand(IMoveCommand command)
         {
-            Debug.Log($"{name} Moves");
+            Debug.Log($"{name} is moving to {command.Target}");
         }
         
         
