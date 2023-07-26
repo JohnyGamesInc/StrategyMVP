@@ -1,5 +1,6 @@
 ﻿using System;
 using _Strategy._Main.Abstractions.Commands;
+using _Strategy._Main.UserControlSystem.Commands;
 
 
 namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
@@ -10,7 +11,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
         
         protected override void ClassSpecificCommandCreation(Action<IStopCommand> creationCallback)
         {
-            // TODO
+            creationCallback?.Invoke(new StopUnitCommand());
         }
         
         

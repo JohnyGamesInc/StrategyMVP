@@ -18,6 +18,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
         private event Action<IPatrolCommand> _creationCallback;
 
 
+        [Inject]
         private void Init(Vector3Value groundClicks) => groundClicks.OnNewValueSubscription += OnNewValue;
 
 

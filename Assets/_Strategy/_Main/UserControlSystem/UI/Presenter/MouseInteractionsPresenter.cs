@@ -41,20 +41,21 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
                 if (!_eventSystem.IsPointerOverGameObject())
                 {
                     var ray = _camera.ScreenPointToRay(Input.mousePosition);
+                    var hits = Physics.RaycastAll(ray);
 
                     if (Input.GetMouseButtonUp(0))
                     {
-                        var hits = Physics.RaycastAll(ray);
-                        
                         if (HitByInterface<ISelectable>(hits, out var selectable))
                             _selectedObject.SetValue(selectable);
-                        
-                        if (HitByInterface<IAttackable>(hits, out var attackable))
-                            _attackablesRMB.SetValue(attackable);
+                        else
+                            _selectedObject.SetValue(null);
                     }
                     else
                     {
-                        if (_groundPlane.Raycast(ray, out var enter))
+                        if (HitByInterface<IAttackable>(hits, out var attackable))
+                            _attackablesRMB.SetValue(attackable);
+                        
+                        else if (_groundPlane.Raycast(ray, out var enter))
                         {
                             _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
                         }
