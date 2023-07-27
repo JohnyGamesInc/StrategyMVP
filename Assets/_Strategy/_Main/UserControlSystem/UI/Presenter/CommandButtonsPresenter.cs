@@ -67,9 +67,6 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
             }
         }
 
-
         
-
-
     }
 }
