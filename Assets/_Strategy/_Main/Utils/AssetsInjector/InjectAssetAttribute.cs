@@ -5,7 +5,7 @@ namespace _Strategy._Main.Utils.AssetsInjector
 {
     
     [AttributeUsage(AttributeTargets.Field)]
-    public class InjectAssetAttribute : Attribute
+    public sealed class InjectAssetAttribute : Attribute
     {
 
         public readonly string AssetName;

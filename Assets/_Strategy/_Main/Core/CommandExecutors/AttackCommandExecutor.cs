@@ -5,12 +5,12 @@ using UnityEngine;
 namespace _Strategy._Main.Core.CommandExecutors
 {
     
-    public class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
+    public sealed class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
     {
         
         protected override void ExecuteSpecificCommand(IAttackCommand command)
         {
-            Debug.Log($"{name} Attacks");
+            Debug.Log($"{name} Attacks {command.Target} with HP [{command.Target.Health}/{command.Target.MaxHealth}]");
         }
         
         

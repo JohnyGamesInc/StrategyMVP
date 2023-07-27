@@ -1,17 +1,16 @@
 using _Strategy._Main.Abstractions;
-using _Strategy._Main.Abstractions.Commands;
 using QuickOutline;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 namespace _Strategy._Main.Core
 {
     
-    internal sealed class MainBuilding : CommandExecutorBase<IProduceUnitCommand>, ISelectable
+    internal sealed class MainBuilding : MonoBehaviour, ISelectable, IAttackable
     {
 
         [SerializeField] private Outline _outline;
+        [SerializeField] private Transform _transform;
         [SerializeField] private Transform _unitsParent;
 
         [SerializeField] private float _maxHealth = 1000.0f;
@@ -19,27 +18,19 @@ namespace _Strategy._Main.Core
 
         private float _health = 1000.0f;
 
+        
         public float Health => _health;
         
         public float MaxHealth => _maxHealth;
 
         public Sprite Icon => _icon;
 
-        public Outline Outline => _outline; 
+        public Outline Outline => _outline;
+        
+        public Transform UnitsParent => _unitsParent;
+        
+        public Transform PivotPoint => _transform;
 
-        
-        [ContextMenu("ProduceUnit")]
-        protected override void ExecuteSpecificCommand(IProduceUnitCommand command)
-        {
-            Instantiate(
-                    command.UnitPrefab, 
-                    new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f)), 
-                    Quaternion.identity,
-                    _unitsParent
-                )
-                .name = command.UnitPrefab.name;
-        }
-        
         
     }
 }

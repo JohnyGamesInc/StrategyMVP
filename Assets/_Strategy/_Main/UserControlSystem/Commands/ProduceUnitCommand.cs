@@ -1,6 +1,7 @@
 ﻿using _Strategy._Main.Abstractions.Commands;
 using _Strategy._Main.Utils.AssetsInjector;
 using UnityEngine;
+using Zenject;
 
 
 namespace _Strategy._Main.UserControlSystem.Commands
@@ -12,17 +13,7 @@ namespace _Strategy._Main.UserControlSystem.Commands
         [InjectAsset("ChomperUnit")] private GameObject _unitPrefab;
 
         public GameObject UnitPrefab => _unitPrefab;
-
-
-        public ProduceUnitCommand()
-        {
-        }
-
-        public ProduceUnitCommand(GameObject unitPrefab)
-        {
-            _unitPrefab = unitPrefab;
-        }
-
+        
         
     }
 }

@@ -5,12 +5,12 @@ using UnityEngine;
 namespace _Strategy._Main.Core.CommandExecutors
 {
     
-    public class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
+    public sealed class PatrolCommandExecutor : CommandExecutorBase<IPatrolCommand>
     {
         
         protected override void ExecuteSpecificCommand(IPatrolCommand command)
         {
-            Debug.Log($"{name} Patrols");
+            Debug.Log($"{name} Patrols from [{command.From}] to [{command.To}]");
         }
         
         

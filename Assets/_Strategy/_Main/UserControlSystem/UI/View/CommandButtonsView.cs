@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 namespace _Strategy._Main.UserControlSystem.UI.View
 {
+    
     public sealed class CommandButtonsView : MonoBehaviour
     {
 
@@ -39,7 +40,30 @@ namespace _Strategy._Main.UserControlSystem.UI.View
 
         private void OnDestroy()
         {
-            Clear();
+            ClearButtonsPanel();
+            _buttonsByExecutorType.Clear();
+        }
+
+
+        public void BlockInteractions(ICommandExecutor commandExecutor)
+        {
+            UnblockAllInteractions();
+            GetButtonByType(commandExecutor.GetType())
+                .GetComponent<Selectable>()
+                .interactable = false;
+        }
+
+
+        public void UnblockAllInteractions() => SetInteractable(true);
+
+
+        private void SetInteractable(bool isInteractable)
+        {
+            _attackButton.GetComponent<Selectable>().interactable = isInteractable;
+            _moveButton.GetComponent<Selectable>().interactable = isInteractable;
+            _patrolButton.GetComponent<Selectable>().interactable = isInteractable;
+            _stopButton.GetComponent<Selectable>().interactable = isInteractable;
+            _produceUnitButton.GetComponent<Selectable>().interactable = isInteractable;
         }
 
 
@@ -47,22 +71,30 @@ namespace _Strategy._Main.UserControlSystem.UI.View
         {
             for (int i = 0; i < commandExecutors.Count; i++)
             {
-                var buttonGameObject = _buttonsByExecutorType
-                    .First(type => type
-                        .Key
-                        .IsInstanceOfType(commandExecutors[i]))
-                    .Value;
+                var effectiveCounter = i;
+                var currentExecutor = commandExecutors[effectiveCounter];
+
+                var buttonGameObject = GetButtonByType(currentExecutor.GetType());
                 
                 buttonGameObject.SetActive(true);
                 
                 var button = buttonGameObject.GetComponent<Button>();
-                var effectiveCounter = i;
-                button.onClick.AddListener(() => OnClickSubscription(commandExecutors[effectiveCounter]));
+                button.onClick.AddListener(() => OnClickSubscription(currentExecutor));
             }
         }
 
 
-        public void Clear()
+        private GameObject GetButtonByType(Type executorInstanceType)
+        {
+            return _buttonsByExecutorType
+                .First(type => type
+                    .Key
+                    .IsAssignableFrom(executorInstanceType))
+                .Value;
+        }
+
+
+        public void ClearButtonsPanel()
         {
             foreach (var kvp in _buttonsByExecutorType)
             {
