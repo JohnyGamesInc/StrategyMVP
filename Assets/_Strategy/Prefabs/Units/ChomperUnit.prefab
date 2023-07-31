@@ -198,6 +198,7 @@ MonoBehaviour:
   _animator: {fileID: 144014058251009865}
   _navAgent: {fileID: 2851345379986907933}
   _movementStop: {fileID: 7876392234564502703}
+  _stopCommandExecutor: {fileID: 7905180021120615908}
 --- !u!114 &4490253249730587015
 MonoBehaviour:
   m_ObjectHideFlags: 0

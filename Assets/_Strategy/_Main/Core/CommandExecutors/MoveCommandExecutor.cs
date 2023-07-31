@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading;
 using _Strategy._Main.Abstractions.Commands;
+using _Strategy._Main.Utils.AsyncExtensions;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,6 +16,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         [SerializeField] private NavMeshAgent _navAgent;
         
         [SerializeField] private UnitMovementStop _movementStop;
+        [SerializeField] private StopCommandExecutor _stopCommandExecutor;
         
         private int _walkTrigger;
         private int _idleTrigger;
@@ -21,8 +24,8 @@ namespace _Strategy._Main.Core.CommandExecutors
         
         private void Awake()
         {
-            _walkTrigger = Animator.StringToHash("Walk");
-            _idleTrigger = Animator.StringToHash("Idle");
+            _walkTrigger = Animator.StringToHash(AnimationTypes.Walk.ToString());
+            _idleTrigger = Animator.StringToHash(AnimationTypes.Idle.ToString());
         }
 
 
@@ -30,7 +33,19 @@ namespace _Strategy._Main.Core.CommandExecutors
         {
             _navAgent.destination = command.Target;
             _animator.SetTrigger(_walkTrigger);
-            await _movementStop;
+
+            _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
+            try
+            {
+                await _movementStop.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
+            }
+            catch (Exception e)
+            {
+                _navAgent.isStopped = true;
+                _navAgent.ResetPath();
+            }
+
+            _stopCommandExecutor.CancellationTokenSource = null;
             _animator.SetTrigger(_idleTrigger);
         }
         
