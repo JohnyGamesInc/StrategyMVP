@@ -8,33 +8,24 @@ using Zenject;
 namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
 {
     
-    public sealed class MoveUnitCommandCreator : CommandCreatorBase<IMoveCommand>
+    public sealed class MoveUnitCommandCreator : CancellableCommandCreatorBase<IMoveCommand, Vector3>
     {
         
-        private Action<IMoveCommand> _creationCallback;
-
-        
-        [Inject]
-        private void Init(Vector3Value groundClicks) => groundClicks.OnNewValueChanged += OnNewValue;
-        
-        
-        private void OnNewValue(Vector3 groundClick)
-        {
-            _creationCallback?.Invoke(new MoveUnitCommand(groundClick));
-            _creationCallback = null;
-        }
-        
-        
-        protected override void ClassSpecificCommandCreation(Action<IMoveCommand> creationCallback) => 
-            _creationCallback = creationCallback;
+        // private Action<IMoveCommand> _creationCallback;
+        //
+        //
+        // [Inject]
+        // private void Init(Vector3Value groundClicks) => groundClicks.OnNewValueChanged += OnNewValue;
+        //
+        //
+        // private void OnNewValue(Vector3 groundClick)
+        // {
+        //     _creationCallback?.Invoke(new MoveUnitCommand(groundClick));
+        //     _creationCallback = null;
+        // }
 
 
-        public override void ProcessCancel()
-        {
-            base.ProcessCancel();
-            _creationCallback = null;
-        }
-        
+        protected override IMoveCommand CreateCommand(Vector3 argument) => new MoveUnitCommand(argument);
         
     }
 }
