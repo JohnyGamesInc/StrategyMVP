@@ -24,17 +24,11 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
         public IAwaiter<T> GetAwaiter() => new NewValueNotifier<T>(this);
 
 
-        private sealed class NewValueNotifier<TAwaited> : IAwaiter<TAwaited>
+        private sealed class NewValueNotifier<TAwaited> : AwaiterBase<TAwaited>
         {
             
             private readonly ScriptableObjectValueBase<TAwaited> _scriptableObjectValueBase;
-            private TAwaited _result;
-            private Action _continuation;
-            private bool _isCompleted;
 
-            public bool IsCompleted => _isCompleted;
-            public TAwaited GetResult() => _result;
-            
             
             public NewValueNotifier(ScriptableObjectValueBase<TAwaited> scriptableObjectValueBase)
             {
@@ -46,24 +40,8 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
             private void OnNewValue(TAwaited obj)
             {
                 _scriptableObjectValueBase.OnNewValueChanged -= OnNewValue;
-                _result = obj;
-                _isCompleted = true;
-                _continuation?.Invoke();
+                OnWaitFinish(obj);
             }
-
-            
-            public void OnCompleted(Action continuation)
-            {
-                if (_isCompleted)
-                {
-                    continuation?.Invoke();
-                }
-                else
-                {
-                    _continuation = continuation;
-                }
-            }
-            
         }
         
         

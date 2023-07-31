@@ -37,21 +37,13 @@ namespace _Strategy._Main.Core
         public IAwaiter<AsyncExtensions.Void> GetAwaiter() => new StopAwaiter(this);
         
         
-        private sealed class StopAwaiter : IAwaiter<AsyncExtensions.Void>
+        
+        private sealed class StopAwaiter : AwaiterBase<AsyncExtensions.Void>
         {
             
             private readonly UnitMovementStop _unitMovementStop;
-            
-            private bool _isCompleted;
-            
-            private Action _continuation;
-            
-            
-            public bool IsCompleted => _isCompleted;
-            
-            public AsyncExtensions.Void GetResult() => new();
 
-            
+
             public StopAwaiter(UnitMovementStop unitMovementStop)
             {
                 _unitMovementStop = unitMovementStop;
@@ -62,17 +54,7 @@ namespace _Strategy._Main.Core
             private void OnStop()
             {
                 _unitMovementStop.OnStop -= OnStop;
-                _isCompleted = true;
-                _continuation?.Invoke();
-            }
-
-
-            public void OnCompleted(Action continuation)
-            {
-                if (_isCompleted)
-                    continuation?.Invoke();
-                else
-                    _continuation = continuation;
+                OnWaitFinish(new AsyncExtensions.Void());
             }
         }
         
