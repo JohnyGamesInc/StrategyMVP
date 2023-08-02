@@ -1,8 +1,10 @@
-﻿using _Strategy._Main.Abstractions;
+﻿using System;
+using _Strategy._Main.Abstractions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using _Strategy._Main.UserControlSystem.UI.Model;
+using UniRx;
+using Zenject;
 
 
 namespace _Strategy._Main.UserControlSystem.UI.Presenter
@@ -17,25 +19,18 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         [SerializeField] private Image _sliderBackground;
         [SerializeField] private Image _sliderFillImage;
         [SerializeField] private Image _healthBackground;
-        [SerializeField] private SelectableValue _selectableValue;
+        
+        [Inject] private IObservable<ISelectable> _selectableValue;
 
         
         
         private void Start()
         {
-
-            _selectableValue.OnNewValueChanged += OnNewValueSelectSubscribe;
-            OnNewValueSelectSubscribe(_selectableValue.CurrentValue);
+            _selectableValue.Subscribe(OnNewValueSelect);
         }
+        
 
-
-        private void OnDestroy()
-        {
-            _selectableValue.OnNewValueChanged -= OnNewValueSelectSubscribe;
-        }
-
-
-        private void OnNewValueSelectSubscribe(ISelectable selected)
+        private void OnNewValueSelect(ISelectable selected)
         {
             _selectedImage.enabled = selected != null;
             _healthSlider.gameObject.SetActive(selected != null);

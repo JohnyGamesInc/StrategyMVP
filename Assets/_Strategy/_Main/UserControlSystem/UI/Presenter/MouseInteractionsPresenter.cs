@@ -1,8 +1,11 @@
 using System.Linq;
 using _Strategy._Main.Abstractions;
 using _Strategy._Main.UserControlSystem.UI.Model;
+using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Zenject;
+using static _Strategy._Main.Utils.UniRxExtensions.UniRxExtensions;
 
 
 namespace _Strategy._Main.UserControlSystem.UI.Presenter
@@ -22,48 +25,41 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         private Plane _groundPlane;
 
 
-        private void Start()
+
+        [Inject]
+        private void Init()
         {
             _groundPlane = new Plane(_groundTransform.up, 0.0f);
-        }
+            
+            var nonBlockedByUIFrameStream = Observable.EveryUpdate()
+                .Where(_ => !_eventSystem.IsPointerOverGameObject());
 
+            var leftClickStream = nonBlockedByUIFrameStream.Where(_ => Input.GetMouseButtonUp(0));
+            var rightClickStream = nonBlockedByUIFrameStream.Where(_ => Input.GetMouseButtonUp(1));
 
-        private void Update()
-        {
-            HandleMouseButtonPressed();
-        }
+            var lmbRays = leftClickStream.Select(_ => _camera.ScreenPointToRay(Input.mousePosition));
+            var rmbRays = rightClickStream.Select(_ => _camera.ScreenPointToRay(Input.mousePosition));
 
-        
-        private void HandleMouseButtonPressed()
-        {
-            if (Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1))
+            var lmbHitsStream = lmbRays.Select(ray => Physics.RaycastAll(ray));
+            var rmbHitsStream = rmbRays.Select(ray => (ray, Physics.RaycastAll(ray)));
+            
+            lmbHitsStream.Subscribe(hits =>
             {
-                if (!_eventSystem.IsPointerOverGameObject())
-                {
-                    var ray = _camera.ScreenPointToRay(Input.mousePosition);
-                    var hits = Physics.RaycastAll(ray);
+                if (HitByInterface<ISelectable>(hits, out var selectable))
+                    _selectedObject.SetValue(selectable);
+            });
 
-                    if (Input.GetMouseButtonUp(0))
-                    {
-                        if (HitByInterface<ISelectable>(hits, out var selectable))
-                            _selectedObject.SetValue(selectable);
-                        else
-                            _selectedObject.SetValue(null);
-                    }
-                    else
-                    {
-                        if (HitByInterface<IAttackable>(hits, out var attackable))
-                            _attackablesRMB.SetValue(attackable);
-                        
-                        else if (_groundPlane.Raycast(ray, out var enter))
-                        {
-                            _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
-                        }
-                    }
-                }
-            }
+            rmbHitsStream.Subscribe((ray, hits) =>
+            {
+                if (HitByInterface<IAttackable>(hits, out var attackable))
+                    _attackablesRMB.SetValue(attackable);
+                
+                else if (_groundPlane.Raycast(ray, out var enter))
+                    _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+            });
+
         }
-
+        
 
         private bool HitByInterface<T>(RaycastHit[] hits, out T result) where T : class
         {
