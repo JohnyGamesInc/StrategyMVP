@@ -1,3 +1,4 @@
+using System;
 using _Strategy._Main.Abstractions;
 using _Strategy._Main.UserControlSystem.UI.Model;
 using _Strategy._Main.Utils.AssetsInjector;
@@ -25,6 +26,7 @@ namespace _Strategy._Main
 
             Container.Bind<IAwaitable<IAttackable>>().FromInstance(_attackableClicksRMB);
             Container.Bind<IAwaitable<Vector3>>().FromInstance(_groundClicksRMB);
+            Container.Bind<IObservable<ISelectable>>().FromInstance(_selectables);
         }
         
         
