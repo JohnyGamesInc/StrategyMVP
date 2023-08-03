@@ -10,10 +10,6 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
     public sealed class CommandButtonsModel
     {
         
-        public event Action<ICommandExecutor> OnCommandAccepted = delegate(ICommandExecutor executor) {  };
-        public event Action OnCommandSent = () => { };
-        public event Action OnCommandCancel = () => { };
-
         [Inject] private CommandCreatorBase<IProduceUnitCommand> _unitProducer;
         [Inject] private CommandCreatorBase<IAttackCommand> _attacker;
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
@@ -22,6 +18,11 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
 
         private bool _commandIsPending;
 
+        public event Action<ICommandExecutor> OnCommandAccepted = delegate(ICommandExecutor executor) {  };
+        public event Action OnCommandSent = () => { };
+        public event Action OnCommandCancel = () => { };
+
+        
         
         public void OnCommandButtonClicked(ICommandExecutor commandExecutor)
         {
