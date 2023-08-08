@@ -19,6 +19,8 @@ namespace _Strategy._Main
         [SerializeField] private SelectableValue _selectables;
         [SerializeField] private AttackableValue _attackableClicksRMB;
 
+        [SerializeField] private Sprite _chomperSprite;
+
 
         public override void InstallBindings()
         {
@@ -27,6 +29,8 @@ namespace _Strategy._Main
             Container.Bind<IAwaitable<IAttackable>>().FromInstance(_attackableClicksRMB);
             Container.Bind<IAwaitable<Vector3>>().FromInstance(_groundClicksRMB);
             Container.Bind<IObservable<ISelectable>>().FromInstance(_selectables);
+
+            Container.Bind<Sprite>().WithId("Chomper").FromInstance(_chomperSprite);
         }
         
         

@@ -5,11 +5,9 @@ using QuickOutline;
 namespace _Strategy._Main.Abstractions
 {
     
-    public interface ISelectable : IHealthHolder
+    public interface ISelectable : IHealthHolder, IIconHandler
     {
         
-        Sprite Icon { get; }
-
         Outline Outline { get; }
 
         Transform PivotPoint { get; }

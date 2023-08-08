@@ -1967,6 +1967,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781532938}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &840360837 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9064022852666867185, guid: fbabe21fc53098542bb1ce1dd01c4a13, type: 3}
+  m_PrefabInstance: {fileID: 8519828584980267279}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5af8d2d11f4b45d79833d937e55d0d94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &892607113
 GameObject:
   m_ObjectHideFlags: 0
@@ -4159,6 +4170,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 338680802}
   - {fileID: 1189880187}
+  - {fileID: 840360837}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -6433,6 +6445,10 @@ PrefabInstance:
       propertyPath: _unitsParent
       value: 
       objectReference: {fileID: 939037443}
+    - target: {fileID: 6154126210131550618, guid: e8f4abd49fe5cc34b953f41c2739649a, type: 3}
+      propertyPath: _unitsParent
+      value: 
+      objectReference: {fileID: 939037443}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7323,6 +7339,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7242360744223684837, guid: fbabe21fc53098542bb1ce1dd01c4a13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065584344485933105, guid: fbabe21fc53098542bb1ce1dd01c4a13, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8065584344485933105, guid: fbabe21fc53098542bb1ce1dd01c4a13, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
