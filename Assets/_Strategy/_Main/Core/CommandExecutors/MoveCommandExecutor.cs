@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using _Strategy._Main.Abstractions.Commands;
 using _Strategy._Main.Utils.AsyncExtensions;
 using UnityEngine;
@@ -29,7 +30,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         }
 
 
-        protected override async void ExecuteSpecificCommand(IMoveCommand command)
+        protected override async Task ExecuteSpecificCommand(IMoveCommand command)
         {
             _navAgent.destination = command.Target;
             _animator.SetTrigger(_walkTrigger);

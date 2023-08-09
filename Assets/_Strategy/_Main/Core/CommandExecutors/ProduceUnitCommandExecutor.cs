@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using _Strategy._Main.Abstractions;
 using _Strategy._Main.Abstractions.Commands;
 using UniRx;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 
@@ -14,6 +16,8 @@ namespace _Strategy._Main.Core.CommandExecutors
 
         [SerializeField] private Transform _unitsParent;
         [SerializeField] private int _maxUnitsInQueue = 6;
+        
+        [Inject] private DiContainer _diContainer;
 
 
         private ReactiveCollection<IUnitProductionTask> _unitProductionQueue = new();
@@ -38,7 +42,7 @@ namespace _Strategy._Main.Core.CommandExecutors
                 {
                     RemoveTaskAtIndex(0);
                     
-                    Instantiate(
+                    _diContainer.InstantiatePrefab(
                             innerTask.UnitPrefab, 
                             new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f)), 
                             Quaternion.identity,
@@ -51,13 +55,16 @@ namespace _Strategy._Main.Core.CommandExecutors
 
 
         [ContextMenu("ProduceUnit")]
-        protected override void ExecuteSpecificCommand(IProduceUnitCommand command) =>
+        protected override async Task ExecuteSpecificCommand(IProduceUnitCommand command)
+        {
             _unitProductionQueue.Add(
                 new UnitProductionTask(
                     command.UnitPrefab, 
                     command.Icon, 
                     command.UnitName,
                     command.ProductionTime));
+        }
+            
 
 
         private void RemoveTaskAtIndex(int index)
