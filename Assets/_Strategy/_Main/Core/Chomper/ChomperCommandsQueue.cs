@@ -1,11 +1,12 @@
 ﻿using _Strategy._Main.Abstractions.Commands;
+using _Strategy._Main.Core.CommandExecutors;
 using _Strategy._Main.Utils.UniRxExtensions;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
 
-namespace _Strategy._Main.UserControlSystem.Commands
+namespace _Strategy._Main.Core
 {
     
     public sealed class ChomperCommandsQueue : MonoBehaviour, ICommandsQueue

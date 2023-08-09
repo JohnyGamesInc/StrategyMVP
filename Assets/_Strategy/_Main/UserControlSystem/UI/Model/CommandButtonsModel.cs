@@ -16,6 +16,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
         [Inject] private CommandCreatorBase<IStopCommand> _stopper;
         [Inject] private CommandCreatorBase<IMoveCommand> _mover;
         [Inject] private CommandCreatorBase<IPatrolCommand> _patroller;
+        [Inject] private CommandCreatorBase<ISetRallyPointCommand> _rallyPointer;
 
         private bool _commandIsPending;
 
@@ -46,6 +47,9 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
                 command => ExecuteCommandWrapper(command, commandsQueue));
 
             _patroller.ProcessCommandExecutor(commandExecutor,
+                command => ExecuteCommandWrapper(command, commandsQueue));
+
+            _rallyPointer.ProcessCommandExecutor(commandExecutor,
                 command => ExecuteCommandWrapper(command, commandsQueue));
         }
 
@@ -78,6 +82,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
             _stopper.ProcessCancel(); 
             _mover.ProcessCancel(); 
             _patroller.ProcessCancel(); 
+            _rallyPointer.ProcessCancel();
             
             OnCommandCancel();
         }

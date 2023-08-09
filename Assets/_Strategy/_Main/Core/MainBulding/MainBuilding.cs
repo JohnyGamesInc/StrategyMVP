@@ -12,12 +12,13 @@ namespace _Strategy._Main.Core
         [SerializeField] private Outline _outline;
         [SerializeField] private Transform _transform;
         [SerializeField] private Transform _unitsParent;
+        [SerializeField] private Sprite _icon;
 
         [SerializeField] private float _maxHealth = 1000.0f;
-        [SerializeField] private Sprite _icon;
 
         private float _health = 1000.0f;
 
+        public Vector3 RallyPoint { get; set; }
         
         public float Health => _health;
         

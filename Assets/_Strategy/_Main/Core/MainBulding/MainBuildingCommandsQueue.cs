@@ -1,9 +1,10 @@
 ﻿using _Strategy._Main.Abstractions.Commands;
+using _Strategy._Main.Core.CommandExecutors;
 using UnityEngine;
 using Zenject;
 
 
-namespace _Strategy._Main.Core.CommandExecutors
+namespace _Strategy._Main.Core
 {
     
     public sealed class MainBuildingCommandsQueue : MonoBehaviour, ICommandsQueue
@@ -12,8 +13,11 @@ namespace _Strategy._Main.Core.CommandExecutors
         [Inject]
         private CommandExecutorBase<IProduceUnitCommand> _produceUnitCommandExecutor;
 
-        
-        
+        [Inject]
+        private CommandExecutorBase<ISetRallyPointCommand> _setRallyPointExecutor;
+
+
+
         public void Clear()
         {
         }
@@ -22,6 +26,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         public async void EnqueueCommand(object command)
         {
             await _produceUnitCommandExecutor.TryExecuteCommand(command);
+            await _setRallyPointExecutor.TryExecuteCommand(command);
         }
         
         

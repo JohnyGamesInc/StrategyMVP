@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using _Strategy._Main.Abstractions;
 using _Strategy._Main.Abstractions.Commands;
 using UniRx;
 using UnityEngine;
 using Zenject;
-using Random = UnityEngine.Random;
 
 
 namespace _Strategy._Main.Core.CommandExecutors
@@ -42,13 +40,17 @@ namespace _Strategy._Main.Core.CommandExecutors
                 {
                     RemoveTaskAtIndex(0);
                     
-                    _diContainer.InstantiatePrefab(
+                    var instance = _diContainer.InstantiatePrefab(
                             innerTask.UnitPrefab, 
-                            new Vector3(Random.Range(-10.0f, 10.0f), 0.0f, Random.Range(-10.0f, 10.0f)), 
+                            transform.position, 
                             Quaternion.identity,
                             _unitsParent
-                        )
-                        .name = innerTask.UnitPrefab.name;
+                        );
+                        
+                    instance.name = innerTask.UnitPrefab.name;
+                    var queue = instance.GetComponent<ICommandsQueue>();
+                    var mainBuilding = GetComponent<MainBuilding>();
+                    queue.EnqueueCommand(new MoveUnitCommand(mainBuilding.RallyPoint));
                 }
             }
         }

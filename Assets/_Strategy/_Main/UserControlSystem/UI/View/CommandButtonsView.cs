@@ -17,6 +17,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
         [SerializeField] private GameObject _patrolButton;
         [SerializeField] private GameObject _stopButton;
         [SerializeField] private GameObject _produceUnitButton;
+        [SerializeField] private GameObject _setRallyPointButton;
 
         
         public event Action<ICommandExecutor, ICommandsQueue> OnClickSubscription = delegate(ICommandExecutor executor, ICommandsQueue queue) { };
@@ -33,7 +34,8 @@ namespace _Strategy._Main.UserControlSystem.UI.View
                 [typeof(ICommandExecutor<IMoveCommand>)] = _moveButton,
                 [typeof(ICommandExecutor<IPatrolCommand>)] = _patrolButton,
                 [typeof(ICommandExecutor<IStopCommand>)] = _stopButton,
-                [typeof(ICommandExecutor<IProduceUnitCommand>)] = _produceUnitButton
+                [typeof(ICommandExecutor<IProduceUnitCommand>)] = _produceUnitButton,
+                [typeof(ICommandExecutor<ISetRallyPointCommand>)] = _setRallyPointButton
             };
         }
 
@@ -64,6 +66,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
             _patrolButton.GetComponent<Selectable>().interactable = isInteractable;
             _stopButton.GetComponent<Selectable>().interactable = isInteractable;
             _produceUnitButton.GetComponent<Selectable>().interactable = isInteractable;
+            _setRallyPointButton.GetComponent<Selectable>().interactable = isInteractable;
         }
 
 
