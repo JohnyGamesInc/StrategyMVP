@@ -17,9 +17,10 @@ namespace _Strategy._Main.UserControlSystem.UI.View
         [SerializeField] private GameObject _patrolButton;
         [SerializeField] private GameObject _stopButton;
         [SerializeField] private GameObject _produceUnitButton;
+        [SerializeField] private GameObject _setRallyPointButton;
 
         
-        public event Action<ICommandExecutor> OnClickSubscription = delegate(ICommandExecutor executor) { };
+        public event Action<ICommandExecutor, ICommandsQueue> OnClickSubscription = delegate(ICommandExecutor executor, ICommandsQueue queue) { };
 
         
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
@@ -29,11 +30,12 @@ namespace _Strategy._Main.UserControlSystem.UI.View
         {
             _buttonsByExecutorType = new Dictionary<Type, GameObject>
             {
-                [typeof(CommandExecutorBase<IAttackCommand>)] = _attackButton,
-                [typeof(CommandExecutorBase<IMoveCommand>)] = _moveButton,
-                [typeof(CommandExecutorBase<IPatrolCommand>)] = _patrolButton,
-                [typeof(CommandExecutorBase<IStopCommand>)] = _stopButton,
-                [typeof(CommandExecutorBase<IProduceUnitCommand>)] = _produceUnitButton
+                [typeof(ICommandExecutor<IAttackCommand>)] = _attackButton,
+                [typeof(ICommandExecutor<IMoveCommand>)] = _moveButton,
+                [typeof(ICommandExecutor<IPatrolCommand>)] = _patrolButton,
+                [typeof(ICommandExecutor<IStopCommand>)] = _stopButton,
+                [typeof(ICommandExecutor<IProduceUnitCommand>)] = _produceUnitButton,
+                [typeof(ICommandExecutor<ISetRallyPointCommand>)] = _setRallyPointButton
             };
         }
 
@@ -64,10 +66,11 @@ namespace _Strategy._Main.UserControlSystem.UI.View
             _patrolButton.GetComponent<Selectable>().interactable = isInteractable;
             _stopButton.GetComponent<Selectable>().interactable = isInteractable;
             _produceUnitButton.GetComponent<Selectable>().interactable = isInteractable;
+            _setRallyPointButton.GetComponent<Selectable>().interactable = isInteractable;
         }
 
 
-        public void MakeLayout(List<ICommandExecutor> commandExecutors)
+        public void MakeLayout(List<ICommandExecutor> commandExecutors, ICommandsQueue queue)
         {
             for (int i = 0; i < commandExecutors.Count; i++)
             {
@@ -79,7 +82,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
                 buttonGameObject.SetActive(true);
                 
                 var button = buttonGameObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnClickSubscription(currentExecutor));
+                button.onClick.AddListener(() => OnClickSubscription(currentExecutor, queue));
             }
         }
 

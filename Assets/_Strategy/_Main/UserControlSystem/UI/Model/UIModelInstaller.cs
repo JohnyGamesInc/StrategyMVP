@@ -19,8 +19,14 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
             Container.Bind<CommandCreatorBase<IMoveCommand>>().To<MoveUnitCommandCreator>().AsTransient();
             Container.Bind<CommandCreatorBase<IPatrolCommand>>().To<PatrolUnitCommandCreator>().AsTransient();
             Container.Bind<CommandCreatorBase<IStopCommand>>().To<StopUnitCommandCreator>().AsTransient();
+            Container.Bind<CommandCreatorBase<ISetRallyPointCommand>>().To<SetRallyPointCommandCreator>().AsTransient();
 
             Container.Bind<CommandButtonsModel>().AsTransient();
+
+            Container.Bind<float>().WithId("Chomper").FromInstance(5.0f);
+            Container.Bind<string>().WithId("Chomper").FromInstance("Chomper");
+
+            Container.Bind<BottomCenterModel>().AsTransient();
         }
 
         

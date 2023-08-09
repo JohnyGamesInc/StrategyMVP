@@ -6,7 +6,7 @@ using UnityEngine;
 namespace _Strategy._Main.Core
 {
     
-    internal sealed class UnitBase : MonoBehaviour, ISelectable, IAttackable
+    internal sealed class UnitBase : MonoBehaviour, ISelectable, IAttackable, IUnit
     {
 
         [SerializeField] private Outline _outline;

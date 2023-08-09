@@ -61,7 +61,9 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
                     (
                         (selectable as Component).GetComponentsInParent<ICommandExecutor>()
                     );
-                    _commandButtonsView.MakeLayout(commandExecutors);
+
+                    var queue = (selectable as Component).GetComponentInParent<ICommandsQueue>();
+                    _commandButtonsView.MakeLayout(commandExecutors, queue);
                 }
             }
         }
