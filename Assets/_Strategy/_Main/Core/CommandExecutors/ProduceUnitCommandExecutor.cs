@@ -48,6 +48,9 @@ namespace _Strategy._Main.Core.CommandExecutors
                         );
                         
                     instance.name = innerTask.UnitPrefab.name;
+                    var fractionMember = instance.GetComponent<FractionMember>();
+                    fractionMember.SetFraction(GetComponent<FractionMember>().FractionId);
+                    
                     var queue = instance.GetComponent<ICommandsQueue>();
                     var mainBuilding = GetComponent<MainBuilding>();
                     queue.EnqueueCommand(new MoveUnitCommand(mainBuilding.RallyPoint));
