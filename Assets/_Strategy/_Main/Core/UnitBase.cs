@@ -8,7 +8,7 @@ using UnityEngine;
 namespace _Strategy._Main.Core
 {
     
-    internal sealed class UnitBase : MonoBehaviour, ISelectable, IAttackable, IUnit, IDamageDealer
+    internal sealed class UnitBase : MonoBehaviour, ISelectable, IAttackable, IUnit, IDamageDealer, IAutomaticAttacker
     {
         
         [SerializeField] private Outline _outline;
@@ -22,6 +22,8 @@ namespace _Strategy._Main.Core
 
         [SerializeField] private float _maxHealth = 100.0f;
         [SerializeField] private float _damage = 25.0f;
+
+        [SerializeField] private float _visionRadius = 8.0f;
         
 
         private int _playDeadTriggerHash;
@@ -39,6 +41,8 @@ namespace _Strategy._Main.Core
         public Transform PivotPoint => _transform;
         
         public float Damage => _damage;
+
+        public float VisionRadius => _visionRadius;
 
 
         

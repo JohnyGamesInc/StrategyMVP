@@ -69,6 +69,9 @@ namespace _Strategy._Main.Core
         }
 
 
+        public ICommand CurrentCommand => _innerCollection.Count > 0 ? _innerCollection[0] : default;
+
+
         public void Clear()
         {
             _innerCollection.Clear();
