@@ -33,5 +33,15 @@ namespace _Strategy._Main.Core
         public Transform PivotPoint => _transform;
 
         
+        public void ReceiveDamage(float amount)
+        {
+            if (_health >= 0)
+                _health -= amount;
+            
+            if (_health <= 0)
+                Destroy(gameObject);
+        }
+        
+        
     }
 }

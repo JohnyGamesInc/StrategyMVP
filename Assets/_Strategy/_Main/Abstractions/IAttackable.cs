@@ -3,8 +3,7 @@
     
     public interface IAttackable : IHealthHolder
     {
-        
-        
-        
+        void ReceiveDamage(float amount);
+
     }
 }

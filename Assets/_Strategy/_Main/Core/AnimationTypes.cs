@@ -3,6 +3,8 @@
     public enum AnimationTypes
     {
         Idle,
-        Walk
+        Walk,
+        Attack,
+        PlayDead
     }
 }
