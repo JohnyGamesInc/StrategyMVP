@@ -31,7 +31,7 @@ namespace _Strategy._Main.Core
             if (info.CurrentCommand is IAttackCommand && !(info.CurrentCommand is Command))
                 return;
 
-            FractionMemberParallelInfo fractionInfo;
+            var fractionInfo = default(FractionMemberParallelInfo);
             
             if (!FractionMembersInfo.TryGetValue(go, out fractionInfo))
                 return;
@@ -52,12 +52,10 @@ namespace _Strategy._Main.Core
         }
         
 
-
-
         public class FractionMemberParallelInfo
         {
-            public Vector3 Position { get; set; }
-            public int Fraction { get; set; }
+            public Vector3 Position;
+            public int Fraction;
 
             
             public FractionMemberParallelInfo(Vector3 position, int fraction)
@@ -70,8 +68,8 @@ namespace _Strategy._Main.Core
 
         public class AttackerParallelInfo
         {
-            public ICommand CurrentCommand { get; set; }
-            public float VisionRadius { get; set; }
+            public ICommand CurrentCommand;
+            public float VisionRadius;
 
 
             public AttackerParallelInfo(ICommand currentCommand, float visionRadius)
@@ -84,8 +82,8 @@ namespace _Strategy._Main.Core
         
         public class Command
         {
-            public GameObject Attacker { get; }
-            public GameObject Target { get; }
+            public GameObject Attacker;
+            public GameObject Target;
 
 
             public Command(GameObject attacker, GameObject target)

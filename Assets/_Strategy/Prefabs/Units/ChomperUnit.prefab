@@ -56,8 +56,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChomperUnit
       objectReference: {fileID: 0}
+    - target: {fileID: 3198895928160460182, guid: cbbcf6e267045b043ae0a5d0debc8280, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204171133222851189, guid: cbbcf6e267045b043ae0a5d0debc8280, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3463194075521224560, guid: cbbcf6e267045b043ae0a5d0debc8280, type: 3}
+      propertyPath: _fractionMemberParallelInfoUpdater
+      value: 
+      objectReference: {fileID: 8242227170048572287}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbbcf6e267045b043ae0a5d0debc8280, type: 3}
+--- !u!114 &8242227170048572287 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6428467437306591630, guid: cbbcf6e267045b043ae0a5d0debc8280, type: 3}
+  m_PrefabInstance: {fileID: 3122336916717060849}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5c65bab96649e6a561aaa10b2b4788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

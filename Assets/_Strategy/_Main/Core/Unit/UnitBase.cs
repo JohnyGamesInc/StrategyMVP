@@ -16,7 +16,6 @@ namespace _Strategy._Main.Core
         
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _transform;
-        [SerializeField] private Transform _unitsParent;
         
         [SerializeField] private Sprite _icon;
 
@@ -25,10 +24,10 @@ namespace _Strategy._Main.Core
 
         [SerializeField] private float _visionRadius = 8.0f;
         
-
         private int _playDeadTriggerHash;
         
         private float _health = 100.0f;
+        
 
         public float Health => _health;
         
@@ -54,12 +53,12 @@ namespace _Strategy._Main.Core
 
         public void ReceiveDamage(float amount)
         {
-            if (_health >= 0)
+            if (_health > 0.0f)
             {
                 _health -= amount;
             }
             
-            if (_health <= 0)
+            if (_health <= 0.0f)
             {
                 Destroy();
             }

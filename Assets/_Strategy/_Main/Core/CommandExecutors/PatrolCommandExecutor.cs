@@ -19,8 +19,8 @@ namespace _Strategy._Main.Core.CommandExecutors
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
 
         private NavMeshAgent _navAgent;
-
-
+        
+        
         private void Awake()
         {
             _navAgent = GetComponent<NavMeshAgent>();

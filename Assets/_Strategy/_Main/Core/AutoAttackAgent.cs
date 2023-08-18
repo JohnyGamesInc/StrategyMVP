@@ -14,7 +14,8 @@ namespace _Strategy._Main.Core
         
         private void Start()
         {
-            AutoAttackEvaluator.AutoAttackCommands.ObserveOnMainThread()
+            AutoAttackEvaluator.AutoAttackCommands
+                .ObserveOnMainThread()
                 .Where(command => command.Attacker == gameObject)
                 .Where(command => command.Attacker != null && command.Target != null)
                 .Subscribe(command => AutoAttack(command.Target))

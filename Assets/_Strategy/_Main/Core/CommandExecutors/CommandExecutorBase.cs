@@ -18,7 +18,6 @@ namespace _Strategy._Main.Core.CommandExecutors
             }
         }
 
-        
         protected abstract Task ExecuteSpecificCommand(T command);
 
         

@@ -19,6 +19,8 @@ namespace _Strategy._Main.Core
 
         private ReactiveCollection<ICommand> _innerCollection = new();
         
+        public ICommand CurrentCommand => _innerCollection.Count > 0 ? _innerCollection[0] : default;
+        
         
         
         [Inject]
@@ -48,7 +50,7 @@ namespace _Strategy._Main.Core
             {
                 _innerCollection.RemoveAt(0);
             }
-            
+
             CheckQueue();
         }
 
@@ -67,14 +69,12 @@ namespace _Strategy._Main.Core
             var command = wrappedCommand as ICommand;
             _innerCollection.Add(command);
         }
-
-
-        public ICommand CurrentCommand => _innerCollection.Count > 0 ? _innerCollection[0] : default;
-
+        
 
         public void Clear()
         {
             _innerCollection.Clear();
+            
             _stopCommandExecutor.TryExecuteCommand(new StopUnitCommand());
         }
         

@@ -14,19 +14,21 @@ namespace _Strategy._Main.Core.CommandExecutors
     {
         
         [SerializeField] private Animator _animator;
-        [SerializeField] private NavMeshAgent _navAgent;
         
         [SerializeField] private UnitMovementStop _movementStop;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
+
+        private NavMeshAgent _navAgent;
         
         private int _walkTrigger;
         private int _idleTrigger;
-        
-        
+
+
         private void Awake()
         {
             _walkTrigger = Animator.StringToHash(AnimationTypes.Walk.ToString());
             _idleTrigger = Animator.StringToHash(AnimationTypes.Idle.ToString());
+            _navAgent = GetComponent<NavMeshAgent>();
         }
 
 
