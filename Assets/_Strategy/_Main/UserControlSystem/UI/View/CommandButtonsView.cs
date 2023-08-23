@@ -24,7 +24,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
 
         
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
-
+        
 
         private void Awake()
         {
@@ -87,7 +87,7 @@ namespace _Strategy._Main.UserControlSystem.UI.View
         }
 
 
-        private GameObject GetButtonByType(Type executorInstanceType)
+        public GameObject GetButtonByType(Type executorInstanceType)
         {
             return _buttonsByExecutorType
                 .First(type => type

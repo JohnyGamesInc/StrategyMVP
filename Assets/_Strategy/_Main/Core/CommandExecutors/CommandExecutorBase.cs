@@ -8,6 +8,7 @@ namespace _Strategy._Main.Core.CommandExecutors
     
     public abstract class CommandExecutorBase<T> : MonoBehaviour, ICommandExecutor<T> where T : class, ICommand
     {
+        
 
         public async Task TryExecuteCommand(object command)
         {
@@ -19,7 +20,6 @@ namespace _Strategy._Main.Core.CommandExecutors
         }
 
         protected abstract Task ExecuteSpecificCommand(T command);
-
         
     }
 }

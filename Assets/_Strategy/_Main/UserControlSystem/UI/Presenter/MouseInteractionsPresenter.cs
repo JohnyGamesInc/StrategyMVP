@@ -20,6 +20,8 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         
         [SerializeField] private Vector3Value _groundClicksRMB;
         [SerializeField] private AttackableValue _attackablesRMB;
+        [SerializeField] private Vector3Value _commandClicksRMB;
+        
         [SerializeField] private Transform _groundTransform;
 
         private Plane _groundPlane;
@@ -55,7 +57,11 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
                     _attackablesRMB.SetValue(attackable);
                 
                 else if (_groundPlane.Raycast(ray, out var enter))
+                {
                     _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+                    _commandClicksRMB.SetValue(ray.origin + ray.direction * enter);
+                }
+                    
             });
 
         }

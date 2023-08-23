@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using _Strategy._Main.Abstractions.Commands;
-using _Strategy._Main.Utils.AssetsInjector;
 using _Strategy._Main.Utils.AsyncExtensions;
 using Zenject;
 
@@ -12,7 +11,6 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
     public abstract class CancellableCommandCreatorBase<TCommand, TArgument> : CommandCreatorBase<TCommand> where TCommand : ICommand
     {
 
-        [Inject] private AssetsContext _context;
         [Inject] private IAwaitable<TArgument> _awaitableArgument;
 
         private CancellationTokenSource _ctSource;
@@ -24,7 +22,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Model.CommandCreators
             try
             {
                 var awaitableArgument = await _awaitableArgument.WithCancellation(_ctSource.Token);
-                creationCallback?.Invoke(_context.Inject(CreateCommand(awaitableArgument)));
+                creationCallback?.Invoke(CreateCommand(awaitableArgument));
             }
             catch (Exception e)
             {

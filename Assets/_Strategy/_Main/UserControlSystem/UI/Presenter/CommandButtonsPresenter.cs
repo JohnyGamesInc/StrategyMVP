@@ -27,6 +27,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         private void Start()
         {
             _commandButtonsView.OnClickSubscription += _commandButtonsModel.OnCommandButtonClicked;
+            _commandButtonsView.OnClickSubscription += OnCommandButtonClickResolver;
             _commandButtonsModel.OnCommandSent += _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandCancel += _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandAccepted += _commandButtonsView.BlockInteractions;
@@ -38,6 +39,7 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         private void OnDestroy()
         {
             _commandButtonsView.OnClickSubscription -= _commandButtonsModel.OnCommandButtonClicked;
+            _commandButtonsView.OnClickSubscription -= OnCommandButtonClickResolver;
             _commandButtonsModel.OnCommandSent -= _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandCancel -= _commandButtonsView.UnblockAllInteractions;
             _commandButtonsModel.OnCommandAccepted -= _commandButtonsView.BlockInteractions;
@@ -69,5 +71,16 @@ namespace _Strategy._Main.UserControlSystem.UI.Presenter
         }
 
         
+        private void OnCommandButtonClickResolver(ICommandExecutor commandExecutor, ICommandsQueue commandsQueue)
+        {
+            if (commandExecutor is ICommandExecutor<IMoveCommand> moveExecutor)
+            {
+                var selectable = (commandExecutor as Component).GetComponentInParent<ISelectable>();
+                CommandButtonsModel.SelectableMoveButtonClickedDict[selectable] = true;
+            }
+        }
+
+
+
     }
 }
