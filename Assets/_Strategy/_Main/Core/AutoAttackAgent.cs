@@ -1,6 +1,7 @@
 ﻿using _Strategy._Main.Abstractions;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 
 namespace _Strategy._Main.Core
@@ -9,7 +10,8 @@ namespace _Strategy._Main.Core
     public sealed class AutoAttackAgent : MonoBehaviour
     {
 
-        [SerializeField] private ChomperCommandsQueue _chomperCommandsQueue;
+        [FormerlySerializedAs("_chomperCommandsQueue")]
+        [SerializeField] private UnitCommandsQueue unitCommandsQueue;
 
         
         private void Start()
@@ -25,8 +27,8 @@ namespace _Strategy._Main.Core
 
         private void AutoAttack(GameObject target)
         {
-            _chomperCommandsQueue.Clear();
-            _chomperCommandsQueue.EnqueueCommand(new AutoAttackUnitCommand(target.GetComponent<IAttackable>()));
+            unitCommandsQueue.Clear();
+            unitCommandsQueue.EnqueueCommand(new AutoAttackUnitCommand(target.GetComponent<IAttackable>()));
         }
         
 

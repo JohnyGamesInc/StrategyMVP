@@ -9,7 +9,7 @@ using Zenject;
 namespace _Strategy._Main.Core
 {
     
-    public sealed class ChomperCommandsQueue : MonoBehaviour, ICommandsQueue
+    public sealed class UnitCommandsQueue : MonoBehaviour, ICommandsQueue
     {
         
         [Inject] private CommandExecutorBase<IMoveCommand> _moveCommandExecutor;
