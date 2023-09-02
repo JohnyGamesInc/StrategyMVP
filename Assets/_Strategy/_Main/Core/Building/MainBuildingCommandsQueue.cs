@@ -15,14 +15,12 @@ namespace _Strategy._Main.Core
 
         [Inject]
         private CommandExecutorBase<ISetRallyPointCommand> _setRallyPointExecutor;
+        
+        
+        public ICommand CurrentCommand => default;
+        
 
-
-
-        public void Clear()
-        {
-        }
-
-
+        
         public async void EnqueueCommand(object command)
         {
             await _produceUnitCommandExecutor.TryExecuteCommand(command);
@@ -30,6 +28,8 @@ namespace _Strategy._Main.Core
         }
         
         
+        public void Clear() { }
 
+        
     }
 }

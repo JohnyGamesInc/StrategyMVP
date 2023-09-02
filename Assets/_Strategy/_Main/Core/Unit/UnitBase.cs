@@ -8,7 +8,7 @@ using UnityEngine;
 namespace _Strategy._Main.Core
 {
     
-    internal sealed class UnitBase : MonoBehaviour, ISelectable, IAttackable, IUnit, IDamageDealer
+    internal sealed class UnitBase : MonoBehaviour, ISelectable, IAttackable, IUnit, IDamageDealer, IAutomaticAttacker
     {
         
         [SerializeField] private Outline _outline;
@@ -16,17 +16,18 @@ namespace _Strategy._Main.Core
         
         [SerializeField] private Animator _animator;
         [SerializeField] private Transform _transform;
-        [SerializeField] private Transform _unitsParent;
         
         [SerializeField] private Sprite _icon;
 
         [SerializeField] private float _maxHealth = 100.0f;
         [SerializeField] private float _damage = 25.0f;
-        
 
+        [SerializeField] private float _visionRadius = 8.0f;
+        
         private int _playDeadTriggerHash;
         
         private float _health = 100.0f;
+        
 
         public float Health => _health;
         
@@ -40,6 +41,8 @@ namespace _Strategy._Main.Core
         
         public float Damage => _damage;
 
+        public float VisionRadius => _visionRadius;
+
 
         
         private void Awake()
@@ -50,12 +53,12 @@ namespace _Strategy._Main.Core
 
         public void ReceiveDamage(float amount)
         {
-            if (_health >= 0)
+            if (_health > 0.0f)
             {
                 _health -= amount;
             }
             
-            if (_health <= 0)
+            if (_health <= 0.0f)
             {
                 Destroy();
             }

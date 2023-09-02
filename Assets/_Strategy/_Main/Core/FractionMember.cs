@@ -19,10 +19,7 @@ namespace _Strategy._Main.Core
         
         private void Awake()
         {
-            if (FractionId != 0)
-            {
-                Register();
-            }
+            Register();
         }
 
 

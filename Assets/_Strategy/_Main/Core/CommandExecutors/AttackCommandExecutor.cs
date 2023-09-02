@@ -18,7 +18,6 @@ namespace _Strategy._Main.Core.CommandExecutors
 
         [SerializeField] private Animator _animator;
         [SerializeField] private StopCommandExecutor _stopCommandExecutor;
-        [SerializeField] private NavMeshAgent _navMeshAgent;
 
         [Inject] private IHealthHolder _ourHealth;
         [Inject(Id = "AttackDistance")] private float _attackingDistance;
@@ -27,6 +26,8 @@ namespace _Strategy._Main.Core.CommandExecutors
         private readonly Subject<Vector3> _targetPositions = new();
         private readonly Subject<Quaternion> _targetRotations = new();
         private readonly Subject<IAttackable> _attackTargets = new();
+
+        private NavMeshAgent _navAgent;
         
         private Vector3 _ourPosition;
         private Vector3 _targetPosition;
@@ -37,8 +38,8 @@ namespace _Strategy._Main.Core.CommandExecutors
         private AttackOperation _currentAttackOperation;
 
         private object _locker = new();
-
-
+        
+        
         [Inject]
         private void Init()
         {
@@ -58,6 +59,13 @@ namespace _Strategy._Main.Core.CommandExecutors
             _targetRotations
                 .ObserveOnMainThread()
                 .Subscribe(SetAttackRotation);
+        }
+        
+        
+        
+        private void Awake()
+        {
+            _navAgent = GetComponent<NavMeshAgent>();
         }
 
 
@@ -86,8 +94,8 @@ namespace _Strategy._Main.Core.CommandExecutors
 
         private void StartAttackingTargets(IAttackable target)
         {
-            _navMeshAgent.isStopped = true;
-            _navMeshAgent.ResetPath();
+            _navAgent.isStopped = true;
+            _navAgent.ResetPath();
             _animator.SetTrigger(Animator.StringToHash(AnimationTypes.Attack.ToString()));
             target.ReceiveDamage(GetComponent<IDamageDealer>().Damage);
         }
@@ -95,14 +103,14 @@ namespace _Strategy._Main.Core.CommandExecutors
 
         private void StartMovingToPosition(Vector3 position)
         {
-            _navMeshAgent.destination = position;
+            _navAgent.destination = position;
             _animator.SetTrigger(Animator.StringToHash(AnimationTypes.Walk.ToString()));
         }
         
 
         protected override async Task ExecuteSpecificCommand(IAttackCommand command)
         {
-            Debug.Log($"{name} Attacks {command.Target} with HP [{command.Target.Health}/{command.Target.MaxHealth}]");
+            Debug.Log($"[{name}.{GetInstanceID()}] Attacks {command.Target} with HP [{command.Target.Health}/{command.Target.MaxHealth}]");
 
             _targetTransform = (command.Target as Component).transform;
             _currentAttackOperation = new AttackOperation(this, command.Target);
@@ -126,7 +134,7 @@ namespace _Strategy._Main.Core.CommandExecutors
         
         
         
-        private class AttackOperation : IAwaitable<AsyncExtensions.Void>
+        private sealed class AttackOperation : IAwaitable<AsyncExtensions.Void>
         {
             
             private readonly AttackCommandExecutor _attackCommandExecutor;
@@ -134,7 +142,7 @@ namespace _Strategy._Main.Core.CommandExecutors
 
             private bool _isCancelled;
 
-            private event Action OnComplete = delegate {  };
+            private event Action OnComplete;
 
 
             public AttackOperation(AttackCommandExecutor attackCommandExecutor, IAttackable target)
@@ -178,8 +186,10 @@ namespace _Strategy._Main.Core.CommandExecutors
                     {
                         var finalDestination = targetPosition -
                                             direction.normalized * (_attackCommandExecutor._attackingDistance * 0.9f);
+                        
                         _attackCommandExecutor._targetPositions.OnNext(finalDestination);
                         Thread.Sleep(100);
+                        
                     } else if (ourRotation != Quaternion.LookRotation(direction))
                     {
                         _attackCommandExecutor._targetRotations.OnNext(Quaternion.LookRotation(direction));

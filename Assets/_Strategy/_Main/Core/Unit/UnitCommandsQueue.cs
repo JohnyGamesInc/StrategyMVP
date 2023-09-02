@@ -9,7 +9,7 @@ using Zenject;
 namespace _Strategy._Main.Core
 {
     
-    public sealed class ChomperCommandsQueue : MonoBehaviour, ICommandsQueue
+    public sealed class UnitCommandsQueue : MonoBehaviour, ICommandsQueue
     {
         
         [Inject] private CommandExecutorBase<IMoveCommand> _moveCommandExecutor;
@@ -18,6 +18,8 @@ namespace _Strategy._Main.Core
         [Inject] private CommandExecutorBase<IStopCommand> _stopCommandExecutor;
 
         private ReactiveCollection<ICommand> _innerCollection = new();
+        
+        public ICommand CurrentCommand => _innerCollection.Count > 0 ? _innerCollection[0] : default;
         
         
         
@@ -48,7 +50,7 @@ namespace _Strategy._Main.Core
             {
                 _innerCollection.RemoveAt(0);
             }
-            
+
             CheckQueue();
         }
 
@@ -67,11 +69,12 @@ namespace _Strategy._Main.Core
             var command = wrappedCommand as ICommand;
             _innerCollection.Add(command);
         }
-
+        
 
         public void Clear()
         {
             _innerCollection.Clear();
+            
             _stopCommandExecutor.TryExecuteCommand(new StopUnitCommand());
         }
         

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using _Strategy._Main.Abstractions;
 using _Strategy._Main.Abstractions.Commands;
 using _Strategy._Main.UserControlSystem.UI.Model.CommandCreators;
 using UnityEngine;
@@ -24,8 +26,14 @@ namespace _Strategy._Main.UserControlSystem.UI.Model
         public event Action OnCommandSent = () => { };
         public event Action OnCommandCancel = () => { };
 
+
+        public static Dictionary<ISelectable, bool> SelectableMoveButtonClickedDict = new();
         
         
+        public event Action<bool> OnMoveButtonPressed = delegate {  };
+
+
+
         public void OnCommandButtonClicked(ICommandExecutor commandExecutor, ICommandsQueue commandsQueue)
         {
             if (_commandIsPending)
